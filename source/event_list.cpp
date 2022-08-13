@@ -24,3 +24,11 @@ int Event_list::get_size()
 {
     return event_list.size();
 }
+vector<struct kevent>::iterator Event_list::first()
+{
+    return event_list.begin();
+}
+vector<struct kevent>::iterator Event_list::end()
+{
+    return event_list.end();
+}

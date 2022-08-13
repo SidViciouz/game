@@ -22,4 +22,6 @@ public:
     Listening(int listening_socket);
     ~Listening(){}
     void wait(Event_list& event_list);
+    void add(int socket,int filter);
+
 };

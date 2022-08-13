@@ -15,3 +15,8 @@ void Listening::wait(Event_list& event_list)
     
     change_list.clear();
 }
+
+void Listening::add(int socket,int filter)
+{
+    change_list.add(socket,filter);
+}

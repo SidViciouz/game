@@ -21,4 +21,6 @@ public:
     void clear();
     struct kevent* get_data();
     int get_size();
+    vector<struct kevent>::iterator first();
+    vector<struct kevent>::iterator end();
 };
