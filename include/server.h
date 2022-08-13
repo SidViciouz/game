@@ -2,8 +2,11 @@
 
 #include <stdexcept>
 #include <iostream>
+#include <map>
 #include "listening.h"
 #include "socket.h"
+#include "player.h"
+#include "message.h"
 
 using namespace std;
 
@@ -14,7 +17,7 @@ private:
     Listening listening;
     Event_list event_list;
     bool is_game_over;
-    
+    map<int,Player> players;
 
 public:
     Server() = delete;

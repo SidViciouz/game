@@ -24,8 +24,8 @@ void Player::set_rotation(Rotation rotation)
 {
     this->rotation = rotation;
 }
-Player Player::create(Position position,Rotation rotation,string name){
+Player Player::create(Position position,Rotation rotation,string name)
+{
     Player new_player{position,rotation,name};
-
     return new_player;
 }

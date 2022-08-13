@@ -2,14 +2,14 @@
 
 struct Position
 {
-    int x;
-    int y;
-    int z;
+    float x;
+    float y;
+    float z;
 };
 
 struct Rotation
 {
-    int roll;
-    int pitch;
-    int yaw;
+    float roll;
+    float pitch;
+    float yaw;
 };

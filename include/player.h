@@ -14,11 +14,11 @@ private:
     string name;
 
 protected:
-    Player() = delete;
     Player(Position position, Rotation rotation,string name)
     : position{position}, rotation{rotation}, name{name} {}
 
 public:
+    Player(){}
     ~Player(){}
     string get_name();
     void set_name(string name);
