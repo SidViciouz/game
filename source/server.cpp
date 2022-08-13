@@ -22,7 +22,7 @@ void Server::run()
 
                 //플레이어를 추가하는 과정.
                 players[client] = Player::create({0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f},string("player")+to_string(client));
-                
+
                 for(auto it = players.begin(); it != players.end() ; it++)
                 {
                     printf("%s\n",it->second.get_name().c_str());
@@ -43,6 +43,8 @@ void Server::run()
                 Message::process(buffer,it->ident,players);
             }
         }
+        //broadcast를 통해서 모든 클라이언트가 자신들의 players를 서버와 같게 update해줘야함.
+        Message::broadcast(players);
     }
 }
 
