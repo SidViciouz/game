@@ -18,6 +18,7 @@ private:
     Event_list event_list;
     bool is_game_over;
     map<int,Player> players;
+    vector<int> client_sockets;
 
 public:
     Server() = delete;
