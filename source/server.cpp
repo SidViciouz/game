@@ -41,8 +41,8 @@ void Server::run()
                 {
                     printf("%s[%d] : %s\n",players[it->ident].get_name().c_str(),read_size,buffer);
                     //메세지 해석해서 처리해야함.
-                    Message::process(buffer,it->ident,players);
-                    Message::broadcast(client_sockets,players);
+                    Message::process(buffer,it->ident,players,bullet_holder);
+                    Message::broadcast(client_sockets,players,bullet_holder);
                 }
 
             }

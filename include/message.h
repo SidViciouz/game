@@ -9,6 +9,7 @@
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
 #include <sys/socket.h>
+#include "bullet.h"
 
 using namespace std;
 using namespace rapidjson;
@@ -17,7 +18,7 @@ class Message
 {
 
 public:
-    static void process(char* message,int ident,map<int,Player>& players);
-    static void broadcast(vector<int>& client_sockets,map<int,Player>& players);
-    static const char* make(int subject,char* action,int object,Position at);
+    static void process(char* message,int ident,map<int,Player>& players,Bullet_holder& bullet_holder);
+    static void broadcast(vector<int>& client_sockets,map<int,Player>& players,Bullet_holder& bullet_holder);
+    static const char* make(int subject,char* action,int object,Position at,Rotation to);
 };
