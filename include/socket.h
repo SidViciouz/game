@@ -18,7 +18,8 @@ private:
 
 public:
     Socket() = delete;
-    Socket(char* address,int16_t port,int queue_size);
+    Socket(char* address,int16_t port,int queue_size); //listening socket
+    Socket(char* address,int16_t port); //client socket
     ~Socket(){}
     int get_socket();
 };

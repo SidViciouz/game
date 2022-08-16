@@ -3,11 +3,15 @@ INC = -I. -I../rapidjson/include -Iinclude -I/opt/homebrew/Cellar/glfw/3.3.6/inc
 LIB_DIRS = -L/opt/homebrew/Cellar/glfw/3.3.6/lib -L/opt/homebrew/Cellar/glew/2.2.0_1/lib
 LIBS = -lglfw.3.3 -lGLEW.2.2.0 -framework OpenGL
 OBJ_FOR_SERVER = server.o socket.o listening.o event_list.o player.o message.o bullet.o time.o
+OBJ_FOR_CLIENT = client.o renderer.o input.o socket.o
 
-all: server
+all: server client
 
 server: $(OBJ_FOR_SERVER)
 	$(CC) $(INC) -o server $(OBJ_FOR_SERVER)
+
+client: $(OBJ_FOR_CLIENT)
+	$(CC) $(INC) -o client $(OBJ_FOR_CLIENT)
 
 server.o: source/server.cpp
 	$(CC) $(INC) -c source/server.cpp -o server.o
@@ -32,6 +36,15 @@ bullet.o: source/bullet.cpp
 
 time.o: source/time.cpp
 	$(CC) $(INC) -c source/time.cpp -o time.o
+
+client.o: source/client.cpp
+	$(CC) $(INC) -c source/client.cpp -o client.o
+
+renderer.o: source/renderer.cpp
+	$(CC) $(INC) -c source/renderer.cpp -o renderer.o
+
+input.o: source/input.cpp
+	$(CC) $(INC) -c source/input.cpp -o input.o
 
 clean: 
 	rm -f *.o

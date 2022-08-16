@@ -55,7 +55,8 @@ void Server::run()
     }
 }
 
-int main(){
+int main()
+{
 
     try
     {
