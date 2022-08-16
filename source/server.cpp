@@ -7,7 +7,7 @@ void Server::run()
         listening.wait(event_list);
 
         time.update();
-        bullet_holder.update();
+        bullet_holder.update(time.get_current_time());
 
         //event_list에 대한 처리
         for(auto it = event_list.first(); it != event_list.end(); it++)

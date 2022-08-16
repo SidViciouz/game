@@ -12,8 +12,10 @@ class Bullet
 private:
     Position location; //getter, setter 만들어야함.
     Rotation direction;
-    uint64_t time;
-    static Bullet create(Position location,Rotation direction,uint64_t time);
+    uint64_t current_time;
+    uint64_t past_time;
+    uint64_t create_time;
+    static Bullet create(Position location,Rotation direction,uint64_t current_time);
     //생성된 시간 추가해야함.
 
 protected:
@@ -21,10 +23,7 @@ protected:
     Bullet(Position location,Rotation direction,uint64_t time);
 public:
     ~Bullet(){}
-    Position get_location();
-    void set_location(Position new_location);
-    Rotation get_direction();
-    void set_direction(Rotation new_direction);
+    void update(uint64_t time);
     friend class Bullet_holder;
 };
 
@@ -35,7 +34,7 @@ private:
 public:
     Bullet_holder(){}
     ~Bullet_holder(){}
-    void create(Position location,Rotation direction,uint64_t time);
-    void update();
-    void print(uint64_t current_time);
+    void create(Position location,Rotation direction,uint64_t current_time);
+    void update(uint64_t time);
+    void print();
 };

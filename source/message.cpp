@@ -44,7 +44,7 @@ void Message::broadcast(vector<int>& client_sockets,map<int,Player>& players,Bul
             send(client_socket,Message::make(it->first,(char*)"move",0,{pos.x,pos.y,pos.z},{0,0,0}),1024,0);
         }
     }
-    bullet_holder.print(time.get_current_time());
+    bullet_holder.print();
 
 }
 const char* Message::make(int subject,char* action,int object,Position at,Rotation to)
