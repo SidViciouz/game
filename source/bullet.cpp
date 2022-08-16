@@ -12,11 +12,22 @@ Bullet Bullet::create(Position location,Rotation direction,uint64_t time)
     return new_bullet;
 }
 
-void Bullet::update(uint64_t time)
+bool Bullet::update(uint64_t time)
 {
     past_time = current_time;
     current_time = time;
+
+    if(current_time - create_time >= 50000000)
+    {
+        return false;
+    }
+
     //위치 업데이트;
+
+    float interval = (current_time - past_time)/1000000.0f;
+    location += Position{direction.yaw*interval,direction.pitch*interval,direction.roll*interval};
+
+    return true;
 }
 
 void Bullet_holder::create(Position location,Rotation direction,uint64_t current_time)
@@ -26,9 +37,16 @@ void Bullet_holder::create(Position location,Rotation direction,uint64_t current
 
 void Bullet_holder::update(uint64_t time)
 {
-    for(Bullet& bullet : bullets)
+    for(auto it = bullets.begin(); it != bullets.end();)
     {
-        bullet.update(time);
+        if(!it->update(time))
+        {
+            it = bullets.erase(it);
+        }
+        else
+        {
+            it++;
+        }
     }
 }
 

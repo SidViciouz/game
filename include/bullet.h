@@ -23,7 +23,7 @@ protected:
     Bullet(Position location,Rotation direction,uint64_t time);
 public:
     ~Bullet(){}
-    void update(uint64_t time);
+    bool update(uint64_t time);
     friend class Bullet_holder;
 };
 
