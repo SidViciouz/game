@@ -7,6 +7,7 @@
 #include "socket.h"
 #include "player.h"
 #include "message.h"
+#include "my_time.h"
 
 using namespace std;
 
@@ -20,6 +21,7 @@ private:
     map<int,Player> players;
     vector<int> client_sockets;
     Bullet_holder bullet_holder;
+    Time time;
 
 public:
     Server() = delete;

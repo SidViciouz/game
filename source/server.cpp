@@ -6,6 +6,9 @@ void Server::run()
     {
         listening.wait(event_list);
 
+        time.update();
+        bullet_holder.update();
+
         //event_list에 대한 처리
         for(auto it = event_list.first(); it != event_list.end(); it++)
         {
@@ -41,8 +44,8 @@ void Server::run()
                 {
                     printf("%s[%d] : %s\n",players[it->ident].get_name().c_str(),read_size,buffer);
                     //메세지 해석해서 처리해야함.
-                    Message::process(buffer,it->ident,players,bullet_holder);
-                    Message::broadcast(client_sockets,players,bullet_holder);
+                    Message::process(buffer,it->ident,players,bullet_holder,time);
+                    Message::broadcast(client_sockets,players,bullet_holder,time);
                 }
 
             }

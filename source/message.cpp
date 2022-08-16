@@ -9,7 +9,7 @@
 }
 */
 
-void Message::process(char* message,int ident,map<int,Player>& players,Bullet_holder& bullet_holder)
+void Message::process(char* message,int ident,map<int,Player>& players,Bullet_holder& bullet_holder,Time& time)
 {
     Document d;
     d.Parse(message);
@@ -28,10 +28,11 @@ void Message::process(char* message,int ident,map<int,Player>& players,Bullet_ho
     }
     else if(strcmp(action.GetString(),"shot") == 0)
     {
-        bullet_holder.create({at[0].GetFloat(),at[1].GetFloat(),at[2].GetFloat()},{to[0].GetFloat(),to[1].GetFloat(),to[2].GetFloat()});
+        bullet_holder.create({at[0].GetFloat(),at[1].GetFloat(),at[2].GetFloat()},
+        {to[0].GetFloat(),to[1].GetFloat(),to[2].GetFloat()},time.get_current_time());
     }
 }
-void Message::broadcast(vector<int>& client_sockets,map<int,Player>& players,Bullet_holder& bullet_holder)
+void Message::broadcast(vector<int>& client_sockets,map<int,Player>& players,Bullet_holder& bullet_holder,Time& time)
 {
     //players의 내용을 모든 플레이어에게 broadcast.
     for(auto it = players.begin(); it != players.end(); it++)
@@ -43,7 +44,7 @@ void Message::broadcast(vector<int>& client_sockets,map<int,Player>& players,Bul
             send(client_socket,Message::make(it->first,(char*)"move",0,{pos.x,pos.y,pos.z},{0,0,0}),1024,0);
         }
     }
-    bullet_holder.print();
+    bullet_holder.print(time.get_current_time());
 
 }
 const char* Message::make(int subject,char* action,int object,Position at,Rotation to)
