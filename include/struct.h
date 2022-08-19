@@ -78,3 +78,10 @@ struct Rotation
         return {roll,pitch,yaw};    
     }
 };
+
+
+enum Type
+{
+    PLAYER,
+    BULLET
+};
