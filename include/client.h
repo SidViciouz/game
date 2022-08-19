@@ -9,16 +9,18 @@
 class Client
 {
 private:
-    Socket client_socket;
+    Socket socket;
     Renderer renderer;
     Input input;
     bool is_game_over;
     Object_holder object_holder;
+    vector<int> client_sockets;
 
 public:
     Client() = delete;
     Client(char* address,int16_t port):
-    client_socket{address,port}, is_game_over{false}, renderer{object_holder} {}
+    socket{address,port}, is_game_over{false}, renderer{object_holder} {}
     ~Client(){}
+    void receive();
     void run();
 };

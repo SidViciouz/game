@@ -1,39 +1,45 @@
 #pragma once
 
 #include "struct.h"
-#include <vector>
+#include <map>
+#include <mutex>
+#include <memory>
 
 using namespace std;
 
 class Object
 {
 private:
+    int socket;
     Type type;
     Position location;
     Rotation direction;
-    static Object create(Type type,Position location,Rotation direction);
 
 protected:
-    Object() = delete;
-    Object(Type type,Position location,Rotation direction):
-    type{type},location{location},direction{direction} {}
+    Object(int socket,Type type,Position location,Rotation direction):
+    socket{socket},type{type},location{location},direction{direction} {}
 
 public:
+    static Object create(int socket,Type type,Position location,Rotation direction);
+    Object(){}
     ~Object(){}
     Type get_type();
     Position get_location();
+    void set_location(Position location);
+    void add_x(float x);
+    void add_y(float y);
     Rotation get_direction();
-    friend class Object_holder;
+    void set_direction(Rotation direction);
 };
 
 class Object_holder
 {
 private:
-    vector<Object> objects;
+    map<int,Object> objects;
 public:
     Object_holder(){}
     ~Object_holder(){}
-    void create(Type type,Position location,Rotation direction);
-    vector<Object>::iterator begin();
-    vector<Object>::iterator end();
+    void add(int socket,Type type,Position location,Rotation direction);
+    map<int,Object>::iterator begin();
+    map<int,Object>::iterator end();
 };

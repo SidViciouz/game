@@ -71,8 +71,8 @@ void Renderer::draw()
     //object_holder에서 object의 location과 direction과 type을 가져와서 이에 맞게 그림.
     for(auto it = object_holder.begin(); it != object_holder.end(); it++)
     {
-        Position loc = it->get_location();
-        Type type = it->get_type();
+        Position loc = it->second.get_location();
+        Type type = it->second.get_type();
         mat4 location = translate(mat4(1.0f),vec3(loc.x,loc.y,loc.z));
         mat4 size;
         if(type == PLAYER)

@@ -41,6 +41,11 @@ Socket::Socket(char* address,int16_t port)
     {
         throw runtime_error(string("connect error!"));
     }
+
+    if(fcntl(sk,F_SETFL,O_NONBLOCK) == -1)
+    {
+        throw runtime_error(string("fcntl error!"));
+    }
 }
 
 
