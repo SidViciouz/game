@@ -61,5 +61,34 @@ object_holder{object_holder}
 
 void Renderer::draw()
 {
-    
+    glClear(GL_COLOR_BUFFER_BIT);
+    glUseProgram(program);
+
+    mat4 projection = perspective(radians(45.0f),4.0f/3.0f,0.1f,100.0f);
+    mat4 view = lookAt(vec3(10,10,10),vec3(0,3,0),vec3(0,1,0));
+    mat4 VP = projection*view;
+
+    //object_holder에서 object의 location과 direction과 type을 가져와서 이에 맞게 그림.
+    for(auto it = object_holder.begin(); it != object_holder.end(); it++)
+    {
+        Position loc = it->get_location();
+        Type type = it->get_type();
+        mat4 location = translate(mat4(1.0f),vec3(loc.x,loc.y,loc.z));
+        mat4 size;
+        if(type == PLAYER)
+        {
+            size = scale(mat4(1.0f),vec3(1.0f,2.0f,1.0f));
+        }
+        else
+        {
+            size = scale(mat4(1.0f),vec3(0.5f,0.5f,0.5f));
+        }
+        mat4 MVP = VP*location*size;
+
+        glUniformMatrix4fv(matrix,1,GL_FALSE,&MVP[0][0]);
+        glDrawArrays(GL_TRIANGLES,0,12*3);
+    }
+
+    glfwSwapBuffers(window);
+    glfwPollEvents();
 }

@@ -4,7 +4,7 @@ void Client::run()
 {
     while(!is_game_over)
     {
-        renderer.draw();// 따로 스레드를 분리해야할 수도 있음. 
+        renderer.draw();
     }
 }
 

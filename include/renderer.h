@@ -8,6 +8,9 @@
 #include <stdexcept>
 #include "shader.hpp"
 #include "data.h"
+#include "struct.h"
+
+using namespace glm;
 
 class Renderer
 {
