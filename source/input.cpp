@@ -9,7 +9,6 @@ Input::Input()
 void Input::send_change(int socket)
 {
     //오브젝트 전송.
-    char buffer[1024];
     Position location;
 
     {
@@ -17,9 +16,13 @@ void Input::send_change(int socket)
         location = object.get_location();
     }
 
-    strcpy(buffer,Message::make(5,(char*)"move",0,location,{0,0,0}).GetString());
-    send(socket,buffer,sizeof(buffer),0);
+    send(socket,Message::make(5,(char*)"move",0,location,{0,0,0}).GetString(),1024,0);
 }
+void Input::register_player(int socket)
+{
+    send(socket,Message::make(5,(char*)"register",0,{0,0,0},{0,0,0}).GetString(),1024,0);
+}
+
 
 void input_thread(Object& object,mutex& object_mutex)
 {

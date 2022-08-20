@@ -24,4 +24,5 @@ public:
     Input();
     ~Input(){}
     void send_change(int socket);
+    void register_player(int socket);
 };

@@ -11,19 +11,19 @@ class Object
 {
 private:
     int socket;
-    Type type;
+    Object_type type;
     Position location;
     Rotation direction;
 
 protected:
-    Object(int socket,Type type,Position location,Rotation direction):
+    Object(int socket,Object_type type,Position location,Rotation direction):
     socket{socket},type{type},location{location},direction{direction} {}
 
 public:
-    static Object create(int socket,Type type,Position location,Rotation direction);
+    static Object create(int socket,Object_type type,Position location,Rotation direction);
     Object(){}
     ~Object(){}
-    Type get_type();
+    Object_type get_type();
     Position get_location();
     void set_location(Position location);
     void add_x(float x);
@@ -39,7 +39,7 @@ private:
 public:
     Object_holder(){}
     ~Object_holder(){}
-    void add(int socket,Type type,Position location,Rotation direction);
+    void add(int socket,Object_type type,Position location,Rotation direction);
     map<int,Object>::iterator begin();
     map<int,Object>::iterator end();
 };

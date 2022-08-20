@@ -16,11 +16,31 @@ void Client::receive()
     else
     {
         //message 처리.
+        Document d;
+        d.Parse(buffer);
+
+        if(d.HasParseError()) return;
+
+        Value& subject = d["subject"];
+        Value& action = d["action"];
+        Value& object = d["object"];
+        Value& at = d["at"];
+        Value& to = d["to"];
+
+        if(strcmp(action.GetString(),"move") == 0)
+        {
+
+        }
+        else if(strcmp(action.GetString(),"shot") == 0)
+        {
+
+        }
     }
 }
 
 void Client::run()
 {
+    input.register_player(socket.get_socket());
     while(!is_game_over)
     {
         input.send_change(socket.get_socket());

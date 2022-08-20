@@ -72,7 +72,7 @@ void Renderer::draw()
     for(auto it = object_holder.begin(); it != object_holder.end(); it++)
     {
         Position loc = it->second.get_location();
-        Type type = it->second.get_type();
+        Object_type type = it->second.get_type();
         mat4 location = translate(mat4(1.0f),vec3(loc.x,loc.y,loc.z));
         mat4 size;
         if(type == PLAYER)

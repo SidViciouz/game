@@ -80,7 +80,7 @@ struct Rotation
 };
 
 
-enum Type
+enum Object_type
 {
     PLAYER,
     BULLET

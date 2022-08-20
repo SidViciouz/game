@@ -1,11 +1,11 @@
 #include "object.h"
 
-Object Object::create(int socket,Type type,Position location,Rotation direction)
+Object Object::create(int socket,Object_type type,Position location,Rotation direction)
 {
     Object new_object(socket,type,location,direction);
     return new_object;
 }
-Type Object::get_type()
+Object_type Object::get_type()
 {
     return type;
 }
@@ -36,7 +36,7 @@ void Object::set_direction(Rotation direction)
     this->direction = direction;
 }
 
-void Object_holder::add(int socket,Type type,Position location,Rotation direction)
+void Object_holder::add(int socket,Object_type type,Position location,Rotation direction)
 {
     objects[socket] = Object::create(socket,type,location,direction);
 }

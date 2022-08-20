@@ -31,6 +31,10 @@ void Message::process(char* message,int ident,map<int,Player>& players,Bullet_ho
         bullet_holder.create({at[0].GetFloat(),at[1].GetFloat(),at[2].GetFloat()},
         {to[0].GetFloat(),to[1].GetFloat(),to[2].GetFloat()},time.get_current_time());
     }
+    else if(strcmp(action.GetString(),"register") == 0)
+    {
+        //printf("register!\n");
+    }
 }
 void Message::broadcast(vector<int>& client_sockets,map<int,Player>& players,Bullet_holder& bullet_holder,Time& time)
 {
