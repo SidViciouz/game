@@ -9,7 +9,6 @@ Input::Input()
 void Input::send_change(int socket)
 {
     //오브젝트 전송.
-    string s;
     char buffer[1024];
     Position location;
 
@@ -18,10 +17,7 @@ void Input::send_change(int socket)
         location = object.get_location();
     }
 
-    s = "change X : " + to_string(location.x) + " Y : " + to_string(location.y);
-
-    strcpy(buffer,s.c_str());
-
+    strcpy(buffer,Message::make(5,(char*)"move",0,location,{0,0,0}).GetString());
     send(socket,buffer,sizeof(buffer),0);
 }
 

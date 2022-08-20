@@ -8,6 +8,7 @@
 #include <time.h>
 #include <sys/socket.h>
 #include "object.h"
+#include "message.h"
 
 using namespace std;
 

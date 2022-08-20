@@ -3,7 +3,7 @@ INC = -I. -I../rapidjson/include -Iinclude -I/opt/homebrew/Cellar/glfw/3.3.6/inc
 LIB_DIRS = -L/opt/homebrew/Cellar/glfw/3.3.6/lib -L/opt/homebrew/Cellar/glew/2.2.0_1/lib
 LIBS = -lglfw.3.3 -lGLEW.2.2.0 -framework OpenGL
 OBJ_FOR_SERVER = server.o socket.o listening.o event_list.o player.o message.o bullet.o time.o
-OBJ_FOR_CLIENT = client.o renderer.o input.o socket.o object.o shader.o
+OBJ_FOR_CLIENT = client.o renderer.o input.o socket.o object.o shader.o message.o bullet.o player.o time.o
 
 all: server client
 

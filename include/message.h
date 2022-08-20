@@ -21,5 +21,5 @@ class Message
 public:
     static void process(char* message,int ident,map<int,Player>& players,Bullet_holder& bullet_holder,Time& time);
     static void broadcast(vector<int>& client_sockets,map<int,Player>& players,Bullet_holder& bullet_holder,Time& time);
-    static const char* make(int subject,char* action,int object,Position at,Rotation to);
+    static StringBuffer make(int subject,char* action,int object,Position at,Rotation to);
 };

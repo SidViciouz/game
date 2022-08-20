@@ -41,13 +41,13 @@ void Message::broadcast(vector<int>& client_sockets,map<int,Player>& players,Bul
 
         for(auto client_socket : client_sockets)
         {
-            send(client_socket,Message::make(it->first,(char*)"move",0,{pos.x,pos.y,pos.z},{0,0,0}),1024,0);
+            send(client_socket,Message::make(it->first,(char*)"move",0,{pos.x,pos.y,pos.z},{0,0,0}).GetString(),1024,0);
         }
     }
     bullet_holder.print();
 
 }
-const char* Message::make(int subject,char* action,int object,Position at,Rotation to)
+StringBuffer Message::make(int subject,char* action,int object,Position at,Rotation to)
 {
     
     Document d;
@@ -71,5 +71,5 @@ const char* Message::make(int subject,char* action,int object,Position at,Rotati
     Writer<StringBuffer> writer(strbuf);
     d.Accept(writer);
 
-    return strbuf.GetString();
+    return strbuf;
 }
