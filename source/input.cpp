@@ -15,7 +15,7 @@ void Input::send_change(int socket)
         lock_guard<mutex> lock(object_mutex);
         location = object.get_location();
     }
-
+    printf("%d\n",socket);
     send(socket,Message::make(5,(char*)"move",0,location,{0,0,0}).GetString(),1024,0);
 }
 void Input::register_player(int socket)
@@ -46,6 +46,7 @@ void input_thread(Object& object,mutex& object_mutex)
     float y = 0.0f;
     float pivot_x = state.axes[GLFW_GAMEPAD_AXIS_LEFT_X];
     float pivot_y = state.axes[GLFW_GAMEPAD_AXIS_LEFT_Y];
+    bool shot = false;
     timespec req,rem;
     req.tv_sec = 0;
     req.tv_nsec = 100000000;
@@ -56,7 +57,8 @@ void input_thread(Object& object,mutex& object_mutex)
         glfwGetGamepadState(gameJoystick,&state);
         x = state.axes[GLFW_GAMEPAD_AXIS_LEFT_X];
         y = state.axes[GLFW_GAMEPAD_AXIS_LEFT_Y];
-
+        shot = state.buttons[GLFW_GAMEPAD_BUTTON_CIRCLE];
+        
         if(fabsf(x - pivot_x) > 0.1f)
         {
             lock_guard<mutex> lock(object_mutex);
@@ -66,6 +68,10 @@ void input_thread(Object& object,mutex& object_mutex)
         {
             lock_guard<mutex> lock(object_mutex);
             object.add_y(y/100.0f);
+        }
+        if(shot == GLFW_PRESS)
+        {
+            
         }
     }
 }

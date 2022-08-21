@@ -29,11 +29,11 @@ void Client::receive()
 
         if(strcmp(action.GetString(),"move") == 0)
         {
-
+            printf("%s\n",buffer);
         }
         else if(strcmp(action.GetString(),"shot") == 0)
         {
-
+            printf("shot!\n");
         }
     }
 }
