@@ -1,8 +1,8 @@
 #include "object.h"
 
-Object Object::create(int socket,Object_type type,Position location,Rotation direction)
+Object Object::create(Object_type type,Position location,Rotation direction)
 {
-    Object new_object(socket,type,location,direction);
+    Object new_object(type,location,direction);
     return new_object;
 }
 Object_type Object::get_type()
@@ -36,16 +36,20 @@ void Object::set_direction(Rotation direction)
     this->direction = direction;
 }
 
-void Object_holder::add(int socket,Object_type type,Position location,Rotation direction)
+void Object_holder::add(string name,Object_type type,Position location,Rotation direction)
 {
-    objects[socket] = Object::create(socket,type,location,direction);
+    objects[name] = Object::create(type,location,direction);
 }
 
-map<int,Object>::iterator Object_holder::begin()
+map<string,Object>::iterator Object_holder::begin()
 {
     return objects.begin();
 }
-map<int,Object>::iterator Object_holder::end()
+map<string,Object>::iterator Object_holder::end()
 {
     return objects.end();
+}
+void Object_holder::set_location(string name,Position location)
+{
+    objects[name].set_location(location);
 }

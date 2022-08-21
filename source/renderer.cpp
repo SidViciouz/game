@@ -54,7 +54,7 @@ object_holder{object_holder}
     glBindBuffer(GL_ARRAY_BUFFER,vertex_buffer_object);
     glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,0,(void*)0);
 
-    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
     glBindBuffer(GL_ARRAY_BUFFER,color_buffer_object);
     glVertexAttribPointer(1,3,GL_FLOAT,GL_FALSE,0,(void*)0);
 }
@@ -73,7 +73,7 @@ void Renderer::draw()
     {
         Position loc = it->second.get_location();
         Object_type type = it->second.get_type();
-        mat4 location = translate(mat4(1.0f),vec3(loc.x,loc.y,loc.z));
+        mat4 location = translate(mat4(1.0f),vec3(loc.x,loc.z,loc.y));
         mat4 size;
         if(type == PLAYER)
         {

@@ -7,6 +7,8 @@
 
 using namespace std;
 
+//object에다가 mutex를 추가해야함. 그래야 renderer에서도 사용가능.
+
 class Object
 {
 private:
@@ -16,11 +18,11 @@ private:
     Rotation direction;
 
 protected:
-    Object(int socket,Object_type type,Position location,Rotation direction):
-    socket{socket},type{type},location{location},direction{direction} {}
+    Object(Object_type type,Position location,Rotation direction):
+    type{type},location{location},direction{direction} {}
 
 public:
-    static Object create(int socket,Object_type type,Position location,Rotation direction);
+    static Object create(Object_type type,Position location,Rotation direction);
     Object(){}
     ~Object(){}
     Object_type get_type();
@@ -35,11 +37,12 @@ public:
 class Object_holder
 {
 private:
-    map<int,Object> objects;
+    map<string,Object> objects;
 public:
     Object_holder(){}
     ~Object_holder(){}
-    void add(int socket,Object_type type,Position location,Rotation direction);
-    map<int,Object>::iterator begin();
-    map<int,Object>::iterator end();
+    void add(string name,Object_type type,Position location,Rotation direction);
+    map<string,Object>::iterator begin();
+    map<string,Object>::iterator end();
+    void set_location(string name,Position location);
 };

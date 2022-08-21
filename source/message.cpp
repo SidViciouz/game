@@ -1,7 +1,7 @@
 #include "message.h"
 /*
 {
-    subject: socket(int)
+    subject: name(string)
     action: name(string)
     object: socket(int)
     at: position(Position{float,float,float})
@@ -9,7 +9,7 @@
 }
 */
 
-void Message::process(char* message,int ident,map<int,Player>& players,Bullet_holder& bullet_holder,Time& time)
+void Message::process(vector<int>& client_sockets,char* message,int ident,map<string,Player>& players,Bullet_holder& bullet_holder,Time& time)
 {
     Document d;
     d.Parse(message);
@@ -24,7 +24,7 @@ void Message::process(char* message,int ident,map<int,Player>& players,Bullet_ho
 
     if(strcmp(action.GetString(),"move") == 0)
     {
-        players[subject.GetInt()].set_position({at[0].GetFloat(),at[1].GetFloat(),at[2].GetFloat()});
+        players[subject.GetString()].set_position({at[0].GetFloat(),at[1].GetFloat(),at[2].GetFloat()});
     }
     else if(strcmp(action.GetString(),"shot") == 0)
     {
@@ -33,10 +33,18 @@ void Message::process(char* message,int ident,map<int,Player>& players,Bullet_ho
     }
     else if(strcmp(action.GetString(),"register") == 0)
     {
-        //printf("register!\n");
+        printf("register!\n");
+        players[subject.GetString()] = Player::create({0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f},subject.GetString());
+
+        for(auto it = players.begin(); it != players.end() ; it++)
+        {
+            printf("%s\n",it->second.get_name().c_str());
+        }
     }
+    
+    broadcast(client_sockets,action.GetString(),players,bullet_holder,time);
 }
-void Message::broadcast(vector<int>& client_sockets,map<int,Player>& players,Bullet_holder& bullet_holder,Time& time)
+void Message::broadcast(vector<int>& client_sockets,const char* action,map<string,Player>& players,Bullet_holder& bullet_holder,Time& time)
 {
     //players의 내용을 모든 플레이어에게 broadcast.
     for(auto it = players.begin(); it != players.end(); it++)
@@ -45,28 +53,30 @@ void Message::broadcast(vector<int>& client_sockets,map<int,Player>& players,Bul
 
         for(auto client_socket : client_sockets)
         {
-            send(client_socket,Message::make(it->first,(char*)"move",0,{pos.x,pos.y,pos.z},{0,0,0}).GetString(),1024,0);
+            send(client_socket,Message::make(it->first,(char*)action,0,{pos.x,pos.y,pos.z},{0,0,0}).GetString(),1024,0);
         }
     }
     bullet_holder.print();
 
 }
-StringBuffer Message::make(int subject,char* action,int object,Position at,Rotation to)
+StringBuffer Message::make(string subject,char* action,int object,Position at,Rotation to)
 {
     
     Document d;
     Value array1(kArrayType);
     Value array2(kArrayType);
-    Value s;
+    Value s1;
+    Value s2;
     Document::AllocatorType& allocator = d.GetAllocator();
     d.SetObject();
 
-    s.SetString(action,allocator);
+    s1.SetString(action,allocator);
+    s2.SetString(subject.c_str(),allocator);
     array1.PushBack(at.x,allocator).PushBack(at.y,allocator).PushBack(at.z,allocator);
     array2.PushBack(to.yaw,allocator).PushBack(to.pitch,allocator).PushBack(to.roll,allocator);
     
-    d.AddMember("subject",subject,allocator);
-    d.AddMember("action",s,allocator);
+    d.AddMember("subject",s2,allocator);
+    d.AddMember("action",s1,allocator);
     d.AddMember("object",object,allocator);
     d.AddMember("at",array1,allocator);
     d.AddMember("to",array2,allocator);

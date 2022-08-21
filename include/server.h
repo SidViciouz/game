@@ -18,7 +18,7 @@ private:
     Listening listening;
     Event_list event_list;
     bool is_game_over;
-    map<int,Player> players;
+    map<string,Player> players;
     vector<int> client_sockets;
     Bullet_holder bullet_holder;
     Time time;

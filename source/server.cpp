@@ -25,15 +25,6 @@ void Server::run()
 
                 listening.add(client,EVFILT_READ);
                 listening.add(client,EVFILT_WRITE);
-
-                //플레이어를 추가하는 과정.
-                players[client] = Player::create({0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f},string("player")+to_string(client));
-
-                for(auto it = players.begin(); it != players.end() ; it++)
-                {
-                    printf("%s\n",it->second.get_name().c_str());
-                }
-                
             }
             else if(it->filter == EVFILT_READ)
             {
@@ -42,10 +33,10 @@ void Server::run()
                 if(read_size != -1 && read_size != 0) // -1인 경우는 받은 메세지가 없는 경우.
                 // 0인 경우는 연결이 종료된 경우. 이 둘을 따로 처리하는 것으로 수정해야 함.
                 {
-                    printf("%s[%d] : %s\n",players[it->ident].get_name().c_str(),read_size,buffer);
+                    printf("%d[%d] : %s\n",it->ident,read_size,buffer);
                     //메세지 해석해서 처리해야함.
-                    Message::process(buffer,it->ident,players,bullet_holder,time);
-                    Message::broadcast(client_sockets,players,bullet_holder,time);
+                    Message::process(client_sockets,buffer,it->ident,players,bullet_holder,time);
+                    //Message::broadcast(client_sockets,players,bullet_holder,time);
                 }
 
             }

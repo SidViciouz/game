@@ -2,7 +2,7 @@
 
 Input::Input()
 {
-    object = Object::create(0,PLAYER,{0,0,0},{0,0,0});
+    object = Object::create(PLAYER,{0,0,0},{0,0,0});
     thread input(input_thread,ref(object),ref(object_mutex));
     input.detach();
 }
@@ -10,17 +10,15 @@ void Input::send_change(int socket)
 {
     //오브젝트 전송.
     Position location;
-
     {
         lock_guard<mutex> lock(object_mutex);
         location = object.get_location();
     }
-    printf("%d\n",socket);
-    send(socket,Message::make(5,(char*)"move",0,location,{0,0,0}).GetString(),1024,0);
+    send(socket,Message::make(string("player")+to_string(socket),(char*)"move",0,location,{0,0,0}).GetString(),1024,0);
 }
 void Input::register_player(int socket)
 {
-    send(socket,Message::make(5,(char*)"register",0,{0,0,0},{0,0,0}).GetString(),1024,0);
+    send(socket,Message::make(string("player")+to_string(socket),(char*)"register",0,{0,0,0},{0,0,0}).GetString(),1024,0);
 }
 
 
@@ -49,7 +47,7 @@ void input_thread(Object& object,mutex& object_mutex)
     bool shot = false;
     timespec req,rem;
     req.tv_sec = 0;
-    req.tv_nsec = 100000000;
+    req.tv_nsec = 10000000;
 
     while(1)
     {
@@ -62,12 +60,12 @@ void input_thread(Object& object,mutex& object_mutex)
         if(fabsf(x - pivot_x) > 0.1f)
         {
             lock_guard<mutex> lock(object_mutex);
-            object.add_x(x/100.0f);
+            object.add_x(x/10.0f);
         }
         if(fabsf(y - pivot_y) > 0.1f)
         {
             lock_guard<mutex> lock(object_mutex);
-            object.add_y(y/100.0f);
+            object.add_y(y/10.0f);
         }
         if(shot == GLFW_PRESS)
         {
