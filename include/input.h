@@ -12,13 +12,15 @@
 
 using namespace std;
 
-void input_thread(Object& object,mutex& object_mutex);
+void input_thread(Object& object,mutex& object_mutex,Shoot& shoot,mutex& shoot_mutex);
 
 class Input
 {
 private:
     mutex object_mutex;
     Object object;
+    mutex shoot_mutex;
+    Shoot shoot;
 
 public:
     Input();

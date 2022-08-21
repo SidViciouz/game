@@ -29,13 +29,19 @@ void Client::receive()
 
         if(strcmp(action.GetString(),"move") == 0)
         {
-            //printf("%s\n",buffer);
             object_holder.set_location(subject.GetString(),
             {at[0].GetFloat(),at[1].GetFloat(),at[2].GetFloat()});
         }
         else if(strcmp(action.GetString(),"shot") == 0)
         {
-            printf("shot!\n");
+            object_holder.set_location(subject.GetString(),
+            {at[0].GetFloat(),at[1].GetFloat(),at[2].GetFloat()});
+        }
+        else if(strcmp(action.GetString(),"shot_created") == 0)
+        {
+            object_holder.add(subject.GetString(),BULLET,
+            {at[0].GetFloat(),at[1].GetFloat(),at[2].GetFloat()},
+            {to[0].GetFloat(),to[1].GetFloat(),to[2].GetFloat()});
         }
         else if(strcmp(action.GetString(),"register") == 0)
         {

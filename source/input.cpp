@@ -1,9 +1,10 @@
 #include "input.h"
 
-Input::Input()
+Input::Input():
+shoot{false,false}
 {
     object = Object::create(PLAYER,{0,0,0},{0,0,0});
-    thread input(input_thread,ref(object),ref(object_mutex));
+    thread input(input_thread,ref(object),ref(object_mutex),ref(shoot),ref(shoot_mutex));
     input.detach();
 }
 void Input::send_change(int socket)
@@ -15,6 +16,21 @@ void Input::send_change(int socket)
         location = object.get_location();
     }
     send(socket,Message::make(string("player")+to_string(socket),(char*)"move",0,location,{0,0,0}).GetString(),1024,0);
+
+    bool shot = false;
+    {
+        lock_guard<mutex> lock(shoot_mutex);
+        shot = shoot.shoot;
+        if(shot)
+        {
+            shoot.shoot = false;
+        }
+    }
+    if(shot)
+    {
+        send(socket,Message::make(string("player")+to_string(socket),(char*)"shot",0,location,{-1.0f,0,0}).GetString(),1024,0);
+    }
+
 }
 void Input::register_player(int socket)
 {
@@ -22,7 +38,7 @@ void Input::register_player(int socket)
 }
 
 
-void input_thread(Object& object,mutex& object_mutex)
+void input_thread(Object& object,mutex& object_mutex,Shoot& shoot,mutex& shoot_mutex)
 {
     int gameJoystick = -1;
 
@@ -69,7 +85,20 @@ void input_thread(Object& object,mutex& object_mutex)
         }
         if(shot == GLFW_PRESS)
         {
-            
+            if(!shoot.pressed)
+            {
+                lock_guard<mutex> lock(shoot_mutex);
+                shoot.pressed = true; //mutex 붙여야함.
+                shoot.shoot = true;
+            }
+        }
+        else
+        {
+            if(shoot.pressed)
+            {
+                lock_guard<mutex> lock(shoot_mutex);
+                shoot.pressed = false;
+            }
         }
     }
 }

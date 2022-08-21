@@ -79,6 +79,11 @@ struct Rotation
     }
 };
 
+struct Shoot
+{
+    bool pressed;
+    bool shoot;
+};
 
 enum Object_type
 {

@@ -20,6 +20,6 @@ class Message
 
 public:
     static void process(vector<int>& client_sockets,char* message,int ident,map<string,Player>& players,Bullet_holder& bullet_holder,Time& time);
-    static void broadcast(vector<int>& client_sockets,const char* action,map<string,Player>& players,Bullet_holder& bullet_holder,Time& time);
+    static void broadcast(vector<int>& client_sockets,const char* action,map<string,Player>& players,Bullet_holder& bullet_holder,Time& time,int message_type);
     static StringBuffer make(string subject,char* action,int object,Position at,Rotation to);
 };

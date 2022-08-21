@@ -29,6 +29,11 @@ bool Bullet::update(uint64_t time)
 
     return true;
 }
+Position Bullet::get_location()
+{
+    return location;
+}
+
 
 void Bullet_holder::create(Position location,Rotation direction,uint64_t current_time)
 {
@@ -60,4 +65,13 @@ void Bullet_holder::print()
         bullet.current_time - bullet.past_time
         );
     }
+}
+
+vector<Bullet>::iterator Bullet_holder::begin()
+{
+    return bullets.begin();
+}
+vector<Bullet>::iterator Bullet_holder::end()
+{
+    return bullets.end();
 }

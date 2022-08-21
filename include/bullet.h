@@ -24,6 +24,7 @@ protected:
 public:
     ~Bullet(){}
     bool update(uint64_t time);
+    Position get_location();
     friend class Bullet_holder;
 };
 
@@ -37,4 +38,6 @@ public:
     void create(Position location,Rotation direction,uint64_t current_time);
     void update(uint64_t time);
     void print();
+    vector<Bullet>::iterator begin();
+    vector<Bullet>::iterator end();
 };
